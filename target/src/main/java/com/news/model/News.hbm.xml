@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.news.model">
+	<class name="News" table="news">
+		<id name="News_Id">
+			<generator class="native" />
+		</id>
+		<property name="News_Title" />
+		<property name="News_Content" />
+		<property name="News_Time" />
+		<property name="News_ClickCount" />
+		<many-to-one name="News_UserId" column="News_UserId" />
+		<many-to-one name="News_CategoryId" column="News_CategoryId" />
+		
+		<property name="News_Before_Time" />
+		<property name="News_Persion" />
+		<many-to-one name="News_AddressId" column="News_AddressId" />		
+	</class>
+</hibernate-mapping>

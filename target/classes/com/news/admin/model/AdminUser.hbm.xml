@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.news.admin.model">
+	<class name="AdminUser" table="admin_user">
+		<id name="Admin_Id">
+			<generator class="native" />
+		</id>
+		<property name="Admin_Name" />
+		<property name="Admin_Password" />
+		<property name="Admin_Time" />
+	</class>
+</hibernate-mapping>

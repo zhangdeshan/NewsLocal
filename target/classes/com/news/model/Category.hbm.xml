@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.news.model">
+	<class name="Category" table="category">
+		<id name="Category_Id">
+			<generator class="native" />
+		</id>
+		<property name="Category_Name" />
+		<property name="Category_Level" />
+		<many-to-one name="parent" column="Category_Pids" />
+		<set name="children" inverse="true" lazy="extra" cascade="all"
+			order-by="Category_Id">
+			<key column="Category_Pids" />
+			<one-to-many class="Category" />
+		</set>
+	</class>
+</hibernate-mapping>

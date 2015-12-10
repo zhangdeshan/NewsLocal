@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
+	"http://struts.apache.org/dtds/struts-2.1.dtd" >
+<struts>
+	<!-- OGNL可以使用静态方法 -->
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+	<package name="news-default" abstract="true" extends="struts-default">
+		<global-results>
+			<!-- 错误页面 -->
+			<result name="error">/WEB-INF/Page/common/show_error.jsp</result>
+			<!-- 程序主页面 -->
+			<result name="index">/WEB-INF/Page/index.jsp</result>
+			<!-- 登录拦截 -->
+			<result name="userLogin">/WEB-INF/Page/user/login.jsp</result>
+
+			<result name="adminUserLogin">/WEB-INF/Page/admin/adminUser/adminLoginUser.jsp
+			</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error"
+				exception="com.news.tools.AppException"></exception-mapping>
+		</global-exception-mappings>
+	</package>
+	<package name="default" extends="news-default" namespace="/default">
+		<action name="BaseAction_*" method="{1}" class="com.news.tools.BaseAction">
+			<result name="index">/WEB-INF/Page/index.jsp</result>
+		</action>
+	</package>
+	<!-- 前台登录 -->
+	<package name="news-front" extends="news-default">
+		<!-- 配置拦截器 -->
+		<interceptors>
+			<!-- 验证用户登录的拦截器 -->
+			<interceptor name="loginInterceptor" class="com.news.tools.UserInteceptor" />
+			<interceptor-stack name="UserDefaultStack">
+				<interceptor-ref name="loginInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+	</package>
+
+	<package name="news.User" extends="news-default" namespace="/User">
+		<action name="User_*" method="{1}" class="userAction">
+			<!-- 登录 -->
+			<result name="LoginJump">/WEB-INF/Page/user/login.jsp</result>
+			<result name="LoginSuccess">/WEB-INF/Page/index.jsp</result>
+			<result name="LoginFail">/WEB-INF/Page/index.jsp</result>
+			<!-- 退出登录 -->
+			<result name="LoginOutSuccess">/WEB-INF/Page/index.jsp</result>
+
+			<result name="RegisterJump">/WEB-INF/Page/user/register.jsp</result>
+
+			<result name="RegisterSuccess">/WEB-INF/Page/user/login.jsp</result>
+			<result name="RegisterFail" type="redirectAction">
+				<param name="namespace">/User</param>
+				<param name="actionName">User_registerJump.html</param>
+			</result>
+
+		</action>
+	</package>
+	<package name="news.Address" extends="news-default" namespace="/Address">
+		<action name="Address_*" method="{1}" class="addressAction">
+
+			<result name="AddSuccess">/WEB-INF/Page/admin/address/addAddress.jsp
+			</result>
+			<result name="addressList">/WEB-INF/Page/admin/address/listAddress.jsp
+			</result>
+			<result name="addressEdit">/WEB-INF/Page/admin/admin.jsp</result>
+
+			<result name="addressDelect">/WEB-INF/Page/admin/address/listAddress.jsp
+			</result>
+		</action>
+	</package>
+
+	<package name="news.News" extends="news-front" namespace="/News">
+		<action name="News_*" method="{1}" class="newsAction">
+			<result name="addNewsJump">/WEB-INF/Page/news/addNews.jsp</result>
+			<result name="saveNewsSuccess">/WEB-INF/Page/index.jsp</result>
+			<result name="newsListJump">/WEB-INF/Page/news/newsList.jsp</result>
+
+			<interceptor-ref name="UserDefaultStack" />
+		</action>
+	</package>
+
+	<package name="news.Category" extends="news-front" namespace="/Category">
+		<action name="Category_*" method="{1}" class="categoryAction">
+			<result name="addCategoryJump">/WEB-INF/Page/admin/category/addCategory.jsp
+			</result>
+			<result name="listCategory">/WEB-INF/Page/admin/category/listCategory.jsp
+			</result>
+		</action>
+	</package>
+
+	<package name="news.NewsOne" extends="news-front" namespace="/NewsOne">
+		<action name="NewsOne_*" method="{1}" class="newsAction">
+			<result name="hotNewsList">/WEB-INF/Page/news/hotNewsList.jsp</result>
+			<result name="NewsDetails">/WEB-INF/Page/news/newsDetails.jsp</result>
+		</action>
+	</package>
+
+
+
+	<!-- 后台方法 -->
+
+	<package name="news_admin" extends="news-default">
+		<!-- 配置拦截器 -->
+		<interceptors>
+			<!-- 验证用户登录的拦截器 -->
+			<interceptor name="adminLoginInterceptor" class="com.news.tools.AdminInteceptor" />
+			<interceptor-stack name="AdminLoginStack">
+				<interceptor-ref name="adminLoginInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+	</package>
+
+
+	<package name="news.adminNews" extends="news_admin" namespace="/adminIndex">
+		<action name="AdminUser_*" method="{1}" class="adminUserAction">
+			<result name="adminIndex">/WEB-INF/Page/admin/adminIndex.jsp</result>				
+			<interceptor-ref name="AdminLoginStack" />
+		</action>
+	</package>
+
+	<package name="news.adminNewsLogin" extends="news_admin"
+		namespace="/adminIndexOne">
+		<action name="AdminUserLogin_*" method="{1}" class="adminUserAction">
+			<result name="adminLoginJump">/WEB-INF/Page/admin/adminIndex.jsp</result>
+			<result name="AdminLoginSuccess">/WEB-INF/Page/admin/adminIndex.jsp</result>
+			<result name="AdminLoginFied">/WEB-INF/Page/admin/adminUser/adminLoginUser.jsp</result>
+		</action>
+	</package>
+</struts>

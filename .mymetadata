@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="newsLocal"
+  id="myeclipse.1435799100731"
+  context-root="/newsLocal"
+  j2ee-spec="6.0"
+  archive="newsLocal.war">
+  <attributes>
+    <attribute name="webrootdir" value="src/main/webapp" />
+  </attributes>
+</project-module>
+

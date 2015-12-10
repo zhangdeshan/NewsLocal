@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.news.model">
+	<class name="User" table="user">
+		<id name="User_Id">
+			<generator class="native" />
+		</id>
+		<property name="User_Name" />
+		<property name="User_Password" />
+		<property name="User_Email" />
+		<property name="User_Phone" />	
+		<property name="User_Time" />			
+		<many-to-one name="User_Address" column="User_Address"/>
+	</class>
+</hibernate-mapping>
